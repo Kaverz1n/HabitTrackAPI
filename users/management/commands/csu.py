@@ -18,7 +18,7 @@ class Command(BaseCommand):
 
             admin.set_password('admin')
             admin.save()
-            
-            self.stderr('Администратор успешно создан!')
+
+            self.stdout.write('Администратор успешно создан!')
         except Exception as e:
-            self.stderr(f'Ошибка создания супервользователя!\nОшибка: {e}')
+            self.stderr.write(f'Ошибка создания супервользователя!\nОшибка: {e}')
