@@ -7,3 +7,9 @@ class HabitPaginator(PageNumberPagination):
     '''
     page_size = 5
     page_size_query_param = 'per_page'
+
+
+class UserHabitPaginator(HabitPaginator):
+    '''
+    Пагинатор для привычек пользователя
+    '''
