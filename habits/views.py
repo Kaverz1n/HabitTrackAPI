@@ -6,6 +6,7 @@ from rest_framework import generics
 from habits.models import Habit
 from habits.permissions import IsOwner
 from habits.serializers import HabitSerializer, UserHabitSerializer
+from habits.services import add_periodic_task
 from habits.paginators import HabitPaginator, UserHabitPaginator
 
 
@@ -29,6 +30,17 @@ class HabitViewSet(viewsets.ModelViewSet):
             return HabitSerializer
 
         return UserHabitSerializer
+
+    def create(self, request, *args, **kwargs) -> Response:
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+
+        habit = serializer.instance
+        add_periodic_task(habit)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def update(self, request, *args, **kwargs):
         if request.method == 'PATCH':
