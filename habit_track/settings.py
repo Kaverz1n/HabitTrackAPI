@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'django_celery_beat',
 
     'rest_framework',
     'rest_framework_simplejwt',
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
 
     'habits',
     'users',
+    'telegram_bot',
 ]
 
 MIDDLEWARE = [
@@ -170,3 +172,19 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
     'http://localhost:8000/api'
 ]
+
+# Celery settings
+
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
+
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
+
+CELERY_TIMEZONE = os.getenv('CELERY_TIMEZONE')
+
+CELERY_TASK_TRACK_STARTED = os.getenv('CELERY_TASK_TRACK_STARTED') == 'True'
+
+CELERY_TASK_TIME_LIMIT = 30 * 60
+
+# Telegram-API settings
+
+TELEGRAM_SECRET_KEY = os.getenv('TELEGRAM_SECRET_KEY')
