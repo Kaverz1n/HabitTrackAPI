@@ -1,8 +1,9 @@
 from datetime import timedelta
 
+from habits.models import Habit
+
 from rest_framework.serializers import ValidationError
 
-from habits.models import Habit
 
 
 class HabitRewardValidator:
@@ -18,7 +19,7 @@ class HabitRewardValidator:
     def __call__(self, value) -> None:
         fields = [dict(value).get(field) for field in self.fields]
 
-        if not None in fields:
+        if None not in fields:
             raise ValidationError(
                 'Не может быть одновременный выбор связанной привычки и указания вознаграждения.'
             )
@@ -35,18 +36,21 @@ class ExecutedTimeValidator:
         self.field = field
 
     def __call__(self, value) -> None:
-        max_time = 120
-        executed_time = dict(value).get(self.field)
-        executed_timedelta = timedelta(
-            hours=executed_time.hour,
-            minutes=executed_time.minute,
-            seconds=executed_time.second
-        )
-
-        if int(executed_timedelta.total_seconds()) > max_time:
-            raise ValidationError(
-                'Время выполнения привычки не может превышать 120 секунд.'
+        try:
+            max_time = 120
+            executed_time = dict(value).get(self.field)
+            executed_timedelta = timedelta(
+                hours=executed_time.hour,
+                minutes=executed_time.minute,
+                seconds=executed_time.second
             )
+
+            if int(executed_timedelta.total_seconds()) > max_time:
+                raise ValidationError(
+                    'Время выполнения привычки не может превышать 120 секунд.'
+                )
+        except AttributeError:
+            pass
 
 
 class HabitIsPositiveValidator:
@@ -105,9 +109,12 @@ class PeriodicityValidator:
         self.field = field
 
     def __call__(self, value) -> None:
-        periodicity = dict(value).get(self.field)
+        try:
+            periodicity = dict(value).get(self.field)
 
-        if periodicity > 7:
-            raise ValidationError(
-                'Нельзя выполнять привычку реже, чем 1 раз в 7 дней.'
-            )
+            if periodicity > 7:
+                raise ValidationError(
+                    'Нельзя выполнять привычку реже, чем 1 раз в 7 дней.'
+                )
+        except TypeError:
+            pass
