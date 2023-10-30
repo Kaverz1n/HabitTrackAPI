@@ -25,6 +25,7 @@ dnspython==2.4.2
 drf-yasg==1.21.7
 eventlet==0.33.3
 executing==2.0.0
+flake8==6.1.0
 greenlet==3.0.0
 idna==3.4
 inflection==0.5.1
@@ -32,12 +33,15 @@ ipython==8.16.1
 jedi==0.19.1
 kombu==5.3.2
 matplotlib-inline==0.1.6
+mccabe==0.7.0
 packaging==23.2
 parso==0.8.3
 pickleshare==0.7.5
 prompt-toolkit==3.0.39
 psycopg2==2.9.9
 pure-eval==0.2.2
+pycodestyle==2.11.1
+pyflakes==3.1.0
 Pygments==2.16.1
 PyJWT==2.8.0
 pyTelegramBotAPI==4.14.0
