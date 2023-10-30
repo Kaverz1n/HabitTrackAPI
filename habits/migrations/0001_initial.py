@@ -7,7 +7,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -20,15 +19,20 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('place', models.CharField(blank=True, max_length=150, null=True, verbose_name='место')),
-                ('time', models.TimeField(default=datetime.datetime(2023, 10, 17, 20, 35, 47, 353815), verbose_name='время')),
+                ('time',
+                 models.TimeField(default=datetime.datetime(2023, 10, 17, 20, 35, 47, 353815), verbose_name='время')),
                 ('action', models.CharField(max_length=150, verbose_name='действие')),
                 ('is_positive', models.BooleanField(default=False, verbose_name='признак приятной привычки')),
                 ('periodicity', models.PositiveSmallIntegerField(default=1, verbose_name='переодичность (в днях)')),
                 ('reward', models.TextField(blank=True, null=True, verbose_name='вознаграждение')),
-                ('executed_time', models.TimeField(default=datetime.timedelta(seconds=120), verbose_name='время на выполнение')),
+                ('executed_time',
+                 models.TimeField(default=datetime.timedelta(seconds=120), verbose_name='время на выполнение')),
                 ('is_public', models.BooleanField(default=False, verbose_name='признак публичности')),
-                ('related_habit', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='habits.habit', verbose_name='связанная привычка')),
-                ('user', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='habit_user', to=settings.AUTH_USER_MODEL, verbose_name='пользователь')),
+                ('related_habit', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                                    to='habits.habit', verbose_name='связанная привычка')),
+                ('user', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE,
+                                           related_name='habit_user', to=settings.AUTH_USER_MODEL,
+                                           verbose_name='пользователь')),
             ],
             options={
                 'verbose_name': 'привычка',
