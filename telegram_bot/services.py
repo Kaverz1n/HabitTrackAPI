@@ -1,7 +1,9 @@
 import telebot
+
 from django.db import IntegrityError
 
 from habit_track import settings
+
 from telegram_bot.models import TelegramUser
 
 TELEGRAM_TOKEN = settings.TELEGRAM_SECRET_KEY

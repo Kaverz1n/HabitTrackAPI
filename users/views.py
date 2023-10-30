@@ -12,7 +12,7 @@ class UserCreateAPIView(generics.CreateAPIView):
     '''
     permission_classes = [AllowAny]
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs) -> Response:
         serializer = UserSerializer(data=request.data)
 
         if serializer.is_valid():

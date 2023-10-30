@@ -1,13 +1,18 @@
-from rest_framework import viewsets, status
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework import generics
+from django.db.models import QuerySet
 
 from habits.models import Habit
 from habits.permissions import IsOwner
 from habits.serializers import HabitSerializer, UserHabitSerializer
 from habits.services import add_periodic_task
 from habits.paginators import HabitPaginator, UserHabitPaginator
+
+from rest_framework import viewsets, status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import generics
+from rest_framework.serializers import Serializer
+
+from typing import Type
 
 
 class HabitViewSet(viewsets.ModelViewSet):
@@ -19,13 +24,13 @@ class HabitViewSet(viewsets.ModelViewSet):
     serializer_class = HabitSerializer
     permission_classes = [IsAuthenticated, IsOwner]
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         if self.action == 'list':
             return Habit.objects.filter(is_public=True).order_by('-time')
 
         return Habit.objects.all()
 
-    def get_serializer_class(self):
+    def get_serializer_class(self) -> Type[Serializer]:
         if self.action in ('list', 'create'):
             return HabitSerializer
 
@@ -42,11 +47,11 @@ class HabitViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
-    def update(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs) -> Response:
         if request.method == 'PATCH':
             return Response({"detail": "Метод \"PATCH\" не разрешен."}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-        super().update(request, *args, **kwargs)
+        return super().update(request, *args, **kwargs)
 
 
 class UserHabitListAPIView(generics.ListAPIView):
@@ -56,7 +61,7 @@ class UserHabitListAPIView(generics.ListAPIView):
     serializer_class = UserHabitSerializer
     pagination_class = UserHabitPaginator
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         user = self.request.user
 
         return Habit.objects.filter(user=user)

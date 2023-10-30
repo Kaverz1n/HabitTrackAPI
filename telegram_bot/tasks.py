@@ -1,5 +1,7 @@
 from datetime import datetime
+
 from celery import shared_task
+
 from telegram_bot.services import BOT
 from telegram_bot.models import TelegramUser
 
@@ -8,7 +10,6 @@ from telegram_bot.models import TelegramUser
 def start_bot() -> None:
     '''
     Задача запускает бота в нон-стоп режиме
-    :return:
     '''
     BOT.polling(none_stop=True)
 

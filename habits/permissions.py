@@ -8,7 +8,7 @@ class IsOwner(BasePermission):
     и удалять привычку
     '''
 
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(self, request, view, obj) -> bool:
         user = request.user
 
         if user == obj.user or user.is_superuser:

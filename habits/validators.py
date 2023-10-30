@@ -1,8 +1,9 @@
 from datetime import timedelta
 
+from habits.models import Habit
+
 from rest_framework.serializers import ValidationError
 
-from habits.models import Habit
 
 
 class HabitRewardValidator:
@@ -18,7 +19,7 @@ class HabitRewardValidator:
     def __call__(self, value) -> None:
         fields = [dict(value).get(field) for field in self.fields]
 
-        if not None in fields:
+        if None not in fields:
             raise ValidationError(
                 'Не может быть одновременный выбор связанной привычки и указания вознаграждения.'
             )

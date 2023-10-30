@@ -1,10 +1,11 @@
-from rest_framework import serializers
-
 from habits.models import Habit
 from habits.validators import (
     HabitRewardValidator, ExecutedTimeValidator, HabitIsPositiveValidator,
     IsPositiveValidator, PeriodicityValidator
 )
+
+from rest_framework import serializers
+
 
 
 class BaseHabitSerializer(serializers.ModelSerializer):
@@ -34,7 +35,7 @@ class BaseHabitSerializer(serializers.ModelSerializer):
             PeriodicityValidator(field='periodicity'),
         ]
 
-    def create(self, validated_data):
+    def create(self, validated_data) -> Habit:
         user = self.context['request'].user
         habit = Habit.objects.create(**validated_data, user=user)
 
