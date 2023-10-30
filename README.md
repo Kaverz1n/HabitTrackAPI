@@ -78,13 +78,13 @@
 7. **Активация Celery Worker**: Необходимо активировать **Celery Worker** на вашем сервере для выполнение асинхронных
    задач и улучшения производительности:
    ```commandline
-   celery -A lms_system worker -l INFO -P eventlet
+   celery -A habit_track worker -l INFO -P eventlet
    ```
 
 8. **Активация Celery beat**: Необходимо активировать **Celery beat** на вашем сервере для выполнение переодичных задач:
 
    ```commandline
-   celery -A lms_system beat -S django
+   celery -A habit_track beat -S django
    ```
 9. **Запуск telegram-бота**: Необходимо ввести команду запуска telegram-бота для напоминания пользователям
    о выполнении привычки:
