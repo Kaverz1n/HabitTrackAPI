@@ -40,7 +40,6 @@ services:
 
   telegram-bot:
     build: .
-    tty: true
     command: python manage.py bot_start
     depends_on:
       - celery
