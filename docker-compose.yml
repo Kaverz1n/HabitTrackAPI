@@ -42,7 +42,6 @@ services:
     build: .
     command: python manage.py bot_start
     depends_on:
-      - celery
       - app
 
   app:
