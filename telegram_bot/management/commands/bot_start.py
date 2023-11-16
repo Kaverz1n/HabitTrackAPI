@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from telegram_bot.tasks import start_bot
+from telegram_bot.services import BOT
 
 
 class Command(BaseCommand):
@@ -9,4 +9,4 @@ class Command(BaseCommand):
     '''
 
     def handle(self, *args, **options) -> None:
-        start_bot.delay()
+        BOT.polling(none_stop=True)
